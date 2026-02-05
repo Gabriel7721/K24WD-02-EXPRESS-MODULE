@@ -40,7 +40,14 @@ app.patch("/books/:id", (req, res) => {
     book.year = Number(year) || book.year;
     res.status(200).json(book);
 });
-app.delete;
+app.delete("/books/:id", (req, res) => {
+    const id = Number(req.params.id);
+    const bookIndex = books.findIndex((b) => b.id === id);
+    if (bookIndex === -1)
+        return res.status(404).json({ message: "Book not found" });
+    books.splice(bookIndex, 1);
+    res.status(204).send();
+});
 const hostName = "192.168.160.49";
 const port = 9999;
 app.listen(port, hostName, () => {
