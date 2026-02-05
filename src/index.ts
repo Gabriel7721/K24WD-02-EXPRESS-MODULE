@@ -35,7 +35,20 @@ app.get("/books/:id", (req: Request, res: Response) => {
   res.status(200).json(book);
 });
 
-app.patch;
+app.patch("/books/:id", (req: Request, res: Response) => {
+  const id = Number(req.params.id); // "1"
+  const book = books.find((b) => b.id === id);
+  if (!book) return res.status(404).json({ message: "Book not found" });
+
+  const { title, author, description, year } = req.body;
+
+  book.title = title || book.title;
+  book.author = author || book.author;
+  book.description = description || book.description;
+  book.year = Number(year) || book.year;
+
+  res.status(200).json(book);
+});
 
 app.delete;
 

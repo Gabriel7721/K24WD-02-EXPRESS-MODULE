@@ -28,7 +28,18 @@ app.get("/books/:id", (req, res) => {
         return res.status(404).json({ message: "Book not found" });
     res.status(200).json(book);
 });
-app.patch;
+app.patch("/books/:id", (req, res) => {
+    const id = Number(req.params.id); // "1"
+    const book = books.find((b) => b.id === id);
+    if (!book)
+        return res.status(404).json({ message: "Book not found" });
+    const { title, author, description, year } = req.body;
+    book.title = title || book.title;
+    book.author = author || book.author;
+    book.description = description || book.description;
+    book.year = Number(year) || book.year;
+    res.status(200).json(book);
+});
 app.delete;
 const hostName = "192.168.160.49";
 const port = 9999;
