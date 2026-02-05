@@ -18,4 +18,15 @@ function numberEnv(name: string, fallback: number): number {
   return n;
 }
 
+export const env = {
+  nodeEnv: process.env.NODE_ENV || "development",
+  port: numberEnv("PORT", 9999),
 
+  jwtAccessSecret: required("JWT_ACCESS_TOKEN"),
+  jwtRefreshSecret: required("JWT_REFRESH_TOKEN"),
+
+  accessTokenTltSeconds: required("ACCESS_TOKEN_TTL_SECONDS"),
+  refreshTokenTltSeconds: required("REFRESH_TOKEN_TTL_SECONDS"),
+
+  refreshCookieName: required("REFRESH_COOKIE_NAME"),
+};
