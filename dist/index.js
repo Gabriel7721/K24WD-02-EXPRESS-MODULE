@@ -2,7 +2,7 @@ import express, {} from "express";
 import { books } from "./models/Book.js";
 const app = express();
 app.use(express.json());
-let nextId = 1; // re-assigned
+let nextId = 4; // re-assigned
 app.get("/books", (req, res) => {
     res.status(200).json(books);
 });
@@ -21,6 +21,15 @@ app.post("/books", (req, res) => {
     books.push(newBook);
     res.status(201).json(newBook);
 });
+app.get("/books/:id", (req, res) => {
+    const id = Number(req.params.id); // "1"
+    const book = books.find((b) => b.id === id);
+    if (!book)
+        return res.status(404).json({ message: "Book not found" });
+    res.status(200).json(book);
+});
+app.patch;
+app.delete;
 const hostName = "192.168.160.49";
 const port = 9999;
 app.listen(port, hostName, () => {
