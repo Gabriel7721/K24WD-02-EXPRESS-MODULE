@@ -29,4 +29,7 @@ export const env = {
   refreshTokenTltSeconds: required("REFRESH_TOKEN_TTL_SECONDS"),
 
   refreshCookieName: required("REFRESH_COOKIE_NAME"),
-};
+
+  mongoUri: required("MONGODB_URI"),
+  mongoDb: required("MONGO_DB"),
+} as const;
