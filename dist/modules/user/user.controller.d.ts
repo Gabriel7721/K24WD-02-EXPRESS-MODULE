@@ -4,5 +4,6 @@ export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
     list: (_req: Request, res: Response) => Promise<void>;
+    register: (_req: Request, res: Response) => Promise<void>;
 }
 //# sourceMappingURL=user.controller.d.ts.map
