@@ -10,5 +10,6 @@ const service = new UserService(db);
 const controller = new UserController(service);
 
 router.get("/", controller.list);
+router.post("/register", controller.register);
 
 export const userRoutes = router;
