@@ -23,6 +23,7 @@ export class AuthController {
             password,
         };
         const { accessToken, refreshToken } = await this.authService.login(input);
+        setCookie(res, accessToken);
         res.json(ok({ accessToken, refreshToken }));
     };
 }
