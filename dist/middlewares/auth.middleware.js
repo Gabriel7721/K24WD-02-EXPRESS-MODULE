@@ -13,5 +13,14 @@ export function requireAuth(req, _res, next) {
         throw new ApiError(401, { message: "Invalid or Expired Access Token" });
     }
 }
-export function requireRole() { }
+// route: app.use("/createProduct", requireAuth(),requireRole("admin"))
+export function requireRole(role) {
+    return (req, _res, next) => {
+        if (!req.auth)
+            throw new ApiError(401, { message: "Un-Authorized" });
+        if (req.auth.role !== role)
+            throw new ApiError(403, { message: "Forbidden" });
+        next();
+    };
+}
 //# sourceMappingURL=auth.middleware.js.map
