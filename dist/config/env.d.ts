@@ -3,8 +3,8 @@ export declare const env: {
     readonly port: number;
     readonly jwtAccessSecret: string;
     readonly jwtRefreshSecret: string;
-    readonly accessTokenTltSeconds: string;
-    readonly refreshTokenTltSeconds: string;
+    readonly accessTokenTltSeconds: number;
+    readonly refreshTokenTltSeconds: number;
     readonly refreshCookieName: string;
     readonly mongoUri: string;
     readonly mongoDb: string;

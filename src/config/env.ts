@@ -25,8 +25,8 @@ export const env = {
   jwtAccessSecret: required("JWT_ACCESS_TOKEN"),
   jwtRefreshSecret: required("JWT_REFRESH_TOKEN"),
 
-  accessTokenTltSeconds: required("ACCESS_TOKEN_TTL_SECONDS"),
-  refreshTokenTltSeconds: required("REFRESH_TOKEN_TTL_SECONDS"),
+  accessTokenTltSeconds: numberEnv("ACCESS_TOKEN_TTL_SECONDS", 900),
+  refreshTokenTltSeconds: numberEnv("REFRESH_TOKEN_TTL_SECONDS", 9000),
 
   refreshCookieName: required("REFRESH_COOKIE_NAME"),
 

@@ -6,7 +6,7 @@ export type RefreshTokenPayload = {
     sub: string;
     jti: string;
 };
-export declare function signAccessToken(): void;
+export declare function signAccessToken(payload: AccessTokenPayload): string;
 export declare function verifyAccessToken(): void;
 export declare function signRefreshToken(): void;
 export declare function verifyRefreshToken(): void;

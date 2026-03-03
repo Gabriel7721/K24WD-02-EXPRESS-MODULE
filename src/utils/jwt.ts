@@ -1,3 +1,6 @@
+import jwt from "jsonwebtoken";
+import { env } from "../config/env.js";
+
 export type AccessTokenPayload = {
   sub: string; // user_id
   role: "customer" | "admin";
@@ -8,7 +11,11 @@ export type RefreshTokenPayload = {
   jti: string; // token_id trong database
 };
 
-export function signAccessToken() {}
+export function signAccessToken(payload: AccessTokenPayload): string {
+  return jwt.sign(payload, env.jwtAccessSecret, {
+    expiresIn: env.accessTokenTltSeconds,
+  });
+}
 export function verifyAccessToken() {}
 
 export function signRefreshToken() {}
