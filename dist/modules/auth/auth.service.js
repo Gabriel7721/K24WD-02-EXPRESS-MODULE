@@ -1,37 +1,49 @@
-import { hashPassword } from "../../utils/crypto.js";
+import { verifyPassword } from "../../utils/crypto.js";
 import { ApiError } from "../../utils/http.js";
-export class UserService {
+import { signAccessToken, signRefreshToken } from "../../utils/jwt.js";
+import crypto from "crypto";
+import { env } from "../../config/env.js";
+function randomTokenId() {
+    return crypto.randomUUID();
+}
+export class AuthService {
+    authDb;
     userDb;
-    // Injection
-    constructor(userDb) {
+    constructor(authDb, userDb) {
+        this.authDb = authDb;
         this.userDb = userDb;
     }
-    async list() {
-        return this.userDb.list();
-    }
-    async register(input) {
+    async login(input) {
         const email = input.email.trim().toLowerCase();
-        if (!email.includes("@"))
-            throw new ApiError(400, { message: "Email must be included @" });
-        const password = input.password;
-        if (password.length < 6)
-            throw new ApiError(400, {
-                message: "Password must be higher than 6 characters",
+        const user = await this.userDb.findByEmail(email);
+        if (!user)
+            throw new ApiError(404, { message: "Email not found" });
+        const ok = await verifyPassword(input.password, user.passwordHash);
+        if (!ok)
+            throw new ApiError(401, {
+                message: "Password is not correct",
             });
-        // NOTE: BTVN người dùng phải nhập 1 ký tự đặt biệt
-        // NOTE: BTVN người dùng phải viết hoa 1 chữ cái
-        const existed = await this.userDb.findByEmail(email);
-        // NOTE: BTVN Bắt lỗi email tồn tại rồi thông qua existed
-        const now = new Date();
-        const hashPwd = await hashPassword(password);
-        const role = input.role || "customer";
-        return this.userDb.create({
-            email,
-            passwordHash: hashPwd,
-            role,
-            createdAt: now,
-            updatedAt: now,
+        const accessToken = signAccessToken({
+            sub: user._id.toString(),
+            role: user.role,
         });
+        const tokenId = randomTokenId();
+        const now = new Date();
+        const expiresAt = new Date(now.getTime() + env.refreshTokenTltSeconds * 1000);
+        const doc = {
+            userId: user._id,
+            tokenId,
+            issuedAt: now,
+            expiresAt,
+        };
+        const refreshToken = signRefreshToken({
+            sub: user._id.toString(),
+            jti: tokenId,
+        });
+        await this.authDb.insert(doc);
+        return { accessToken, refreshToken };
     }
+    async refresh() { }
+    async logout() { }
 }
 //# sourceMappingURL=auth.service.js.map
