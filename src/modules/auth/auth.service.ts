@@ -57,9 +57,9 @@ export class AuthService {
     });
 
     await this.authDb.insert(doc);
-
     return { accessToken, refreshToken };
   }
+
   async refresh() {}
   async logout() {}
 }

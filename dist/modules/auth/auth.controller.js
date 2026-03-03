@@ -1,23 +1,19 @@
 import { ok } from "../../utils/http.js";
-export class UserController {
-    userService;
-    constructor(userService) {
-        this.userService = userService;
+export class AuthController {
+    authService;
+    constructor(authService) {
+        this.authService = authService;
     }
-    list = async (_req, res) => {
-        const users = await this.userService.list();
-        res.json({ data: users });
-    };
-    // POST register
-    register = async (_req, res) => {
-        const { email, password, role } = _req.body;
-        const user = await this.userService.register({ email, password, role });
-        res.status(201).json(ok({
-            id: user?._id.toString(),
-            email: user?.email,
-            role: user?.role,
-            createdAt: user?.createdAt,
-        }));
+    login = async (_req, res) => {
+        const { email, password } = _req.body ?? {};
+        // const userAgent = _req.headers["user-agent"];
+        // const userIp = _req.ip;
+        const input = {
+            email,
+            password,
+        };
+        const { accessToken, refreshToken } = await this.authService.login(input);
+        res.json(ok({ accessToken, refreshToken }));
     };
 }
 //# sourceMappingURL=auth.controller.js.map
