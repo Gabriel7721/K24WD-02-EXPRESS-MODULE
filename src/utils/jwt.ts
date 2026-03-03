@@ -16,7 +16,15 @@ export function signAccessToken(payload: AccessTokenPayload): string {
     expiresIn: env.accessTokenTltSeconds,
   });
 }
-export function verifyAccessToken() {}
+export function verifyAccessToken(token: string): AccessTokenPayload {
+  return jwt.verify(token, env.jwtAccessSecret) as AccessTokenPayload;
+}
 
-export function signRefreshToken() {}
-export function verifyRefreshToken() {}
+export function signRefreshToken(payload: RefreshTokenPayload) {
+  return jwt.sign(payload, env.jwtRefreshSecret, {
+    expiresIn: env.refreshTokenTltSeconds,
+  });
+}
+export function verifyRefreshToken(token: string): RefreshTokenPayload {
+  return jwt.verify(token, env.jwtAccessSecret) as RefreshTokenPayload;
+}

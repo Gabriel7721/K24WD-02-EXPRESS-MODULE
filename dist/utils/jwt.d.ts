@@ -7,7 +7,7 @@ export type RefreshTokenPayload = {
     jti: string;
 };
 export declare function signAccessToken(payload: AccessTokenPayload): string;
-export declare function verifyAccessToken(): void;
-export declare function signRefreshToken(): void;
-export declare function verifyRefreshToken(): void;
+export declare function verifyAccessToken(token: string): AccessTokenPayload;
+export declare function signRefreshToken(payload: RefreshTokenPayload): string;
+export declare function verifyRefreshToken(token: string): RefreshTokenPayload;
 //# sourceMappingURL=jwt.d.ts.map

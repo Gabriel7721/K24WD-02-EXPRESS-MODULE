@@ -5,7 +5,15 @@ export function signAccessToken(payload) {
         expiresIn: env.accessTokenTltSeconds,
     });
 }
-export function verifyAccessToken() { }
-export function signRefreshToken() { }
-export function verifyRefreshToken() { }
+export function verifyAccessToken(token) {
+    return jwt.verify(token, env.jwtAccessSecret);
+}
+export function signRefreshToken(payload) {
+    return jwt.sign(payload, env.jwtRefreshSecret, {
+        expiresIn: env.refreshTokenTltSeconds,
+    });
+}
+export function verifyRefreshToken(token) {
+    return jwt.verify(token, env.jwtAccessSecret);
+}
 //# sourceMappingURL=jwt.js.map
