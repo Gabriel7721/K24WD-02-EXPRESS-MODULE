@@ -1,6 +1,17 @@
 import type { Request, Response } from "express";
 import type { AuthService } from "./auth.service.js";
 import { ok } from "../../utils/http.js";
+import { env } from "../../config/env.js";
+
+function setCookie(res: Response, token: string) {
+  res.cookie(env.refreshCookieName, token, {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: env.nodeEnv === "production",
+    maxAge: env.accessTokenTltSeconds * 1000,
+    path: "/api/auth",
+  });
+}
 
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
