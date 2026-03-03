@@ -6,5 +6,7 @@ export type RefreshTokenEntity = RefreshTokenDoc & {
 export declare class AuthDatabase {
     private col;
     insert(doc: RefreshTokenDoc): Promise<RefreshTokenEntity>;
+    findActiveByTokenId(tokenId: string): Promise<RefreshTokenEntity | null>;
+    revoke(tokenId: string, replacedByTokenId?: string): Promise<void>;
 }
 //# sourceMappingURL=auth.database.d.ts.map
