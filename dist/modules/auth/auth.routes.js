@@ -1,0 +1,12 @@
+import { Router } from "express";
+import { UserDatabase } from "./auth.database.js";
+import { UserService } from "./auth.service.js";
+import { UserController } from "./auth.controller.js";
+const router = Router();
+const db = new UserDatabase();
+const service = new UserService(db);
+const controller = new UserController(service);
+router.get("/", controller.list);
+router.post("/register", controller.register);
+export const userRoutes = router;
+//# sourceMappingURL=auth.routes.js.map

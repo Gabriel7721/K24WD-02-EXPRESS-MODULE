@@ -25,4 +25,5 @@ export class UserDatabase {
     const res = await this.col().insertOne(doc);
     return { ...doc, _id: res.insertedId };
   }
+  // NOTE: InsertedMany / UpdateOne / DeleteOne
 }

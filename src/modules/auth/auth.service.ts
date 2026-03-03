@@ -1,7 +1,7 @@
 import { hashPassword } from "../../utils/crypto.js";
 import { ApiError } from "../../utils/http.js";
-import type { UserDatabase, UserEntity } from "./user.database.js";
-import type { UserRole } from "./user.model.js";
+import type { UserDatabase, UserEntity } from "./auth.database.js";
+import type { UserRole } from "./auth.model.js";
 
 export class UserService {
   // Injection
