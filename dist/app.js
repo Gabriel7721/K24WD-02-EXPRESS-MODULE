@@ -6,7 +6,7 @@ export function createApp() {
     const app = express();
     app.use(express.json());
     app.use(cookieParser());
-    app.use("/api/user", userRoutes);
+    app.use("/api/users", userRoutes);
     app.use(errorMiddleware);
     return app;
 }

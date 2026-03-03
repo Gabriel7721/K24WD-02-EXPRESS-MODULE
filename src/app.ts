@@ -9,7 +9,7 @@ export function createApp() {
   app.use(express.json());
   app.use(cookieParser());
 
-  app.use("/api/user", userRoutes);
+  app.use("/api/users", userRoutes);
 
   app.use(errorMiddleware);
 
